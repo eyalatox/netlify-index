@@ -1,0 +1,913 @@
+{
+  "identifier": "modelcontextprotocol/inspector/inspector",
+  "name": "MCP Inspector",
+  "description": "Visual testing tool for MCP servers. Provides interactive debugging and inspection capabilities for Model Context Protocol implementations.",
+  "platform": "nodejs",
+  "firstReleaseDate": "2025-06-04",
+  "isOfficial": true,
+  "isCommunity": false,
+  "isHostable": true,
+  "repository": {
+    "provider": "github.com",
+    "url": "https://github.com/modelcontextprotocol/inspector"
+  },
+  "versions": [
+    {
+      "version": "0.17.0",
+      "license": "MIT",
+      "releaseDate": "2025-10-01",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 0,
+          "quality": 80,
+          "maintainabile": 100,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+        ]
+      }
+    },
+    {
+      "version": "0.16.8",
+      "license": "MIT",
+      "releaseDate": "2025-09-17",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 0,
+          "quality": 80,
+          "maintainabile": 100,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+        ]
+      }
+    },
+    {
+      "version": "0.16.7",
+      "license": "MIT",
+      "releaseDate": "2025-09-12",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 0,
+          "quality": 80,
+          "maintainabile": 100,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+        ]
+      }
+    },
+    {
+      "version": "0.16.6",
+      "license": "MIT",
+      "releaseDate": "2025-09-03",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 0,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": []
+      }
+    },
+    {
+      "version": "0.16.5",
+      "license": "MIT",
+      "releaseDate": "2025-08-18",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 40,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.16.4",
+      "license": "MIT",
+      "releaseDate": "2025-08-14",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 40,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.16.3",
+      "license": "MIT",
+      "releaseDate": "2025-08-09",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 40,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.16.2",
+      "license": "MIT",
+      "releaseDate": "2025-07-25",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 40,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.16.1",
+      "license": "MIT",
+      "releaseDate": "2025-07-10",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 40,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.16.0",
+      "license": "MIT",
+      "releaseDate": "2025-07-08",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 40,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.15.0",
+      "license": "MIT",
+      "releaseDate": "2025-06-26",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 80,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "OX-2025-2BE109B1C5",
+            "description": "Server is listening with only a port number, which defaults to binding on 0.0.0.0 (all network interfaces). This exposes the server to external networks. Specify a host explicitly, preferably 'localhost' or '127.0.0.1' for internal-only access.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Identify victim's IP address on local network | Step 2: Connect to http://[victim-ip]:6274 | Step 3: Access MCP Inspector interface remotely | Step 4: Monitor/intercept MCP tool calls and sensitive data",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-CWE-200",
+            "severity": "CRITICAL",
+            "category": "Network Exposure",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-a34d1c5d-ae87-44c4-97e3-a2c656446bf8/client/bin/client.js",
+              "line": 57,
+              "snippet": "server.listen(port);"
+            }
+          },
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.14.3",
+      "license": "MIT",
+      "releaseDate": "2025-06-18",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 80,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "OX-2025-D0B14B6B10",
+            "description": "Server is listening with only a port number, which defaults to binding on 0.0.0.0 (all network interfaces). This exposes the server to external networks. Specify a host explicitly, preferably 'localhost' or '127.0.0.1' for internal-only access.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Identify victim machine IP on local network | Step 2: Connect to http://[victim-ip]:6274 from attacker machine | Step 3: Access full MCP Inspector interface remotely | Step 4: Monitor/intercept MCP tool calls and responses containing sensitive data",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-CWE-200",
+            "severity": "CRITICAL",
+            "category": "Network Exposure",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-0168baa3-ee26-4d5d-8684-be37fd545db9/client/bin/client.js",
+              "line": 57,
+              "snippet": "server.listen(port);"
+            }
+          },
+          {
+            "id": "OX-2025-43BC62B452",
+            "description": "SSRF vulnerability detected. The fetch API is being used with a user-controlled URL without validation. Attackers can make requests to internal services or cloud metadata endpoints. Validate URLs against an allowlist before making requests.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Attacker crafts LLM prompt to trigger MCP proxy request with malicious URL | Step 2: URL parameter flows to fetch() at line 209 without sanitization | Step 3: Proxy executes fetch to internal/malicious target (e.g., http://169.254.169.254/latest/meta-data/, file:///etc/passwd) | Result: SSRF exposes internal services, cloud credentials, or local files",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "REQUIRED",
+                "scope": "CHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "LOW",
+                "availabilityImpact": "NONE",
+                "baseScore": 8.4,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 2.8,
+              "impactScore": 4.9
+            },
+            "cwe": "CWE-CWE-918",
+            "severity": "HIGH",
+            "category": "Dangerous Operations",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-0168baa3-ee26-4d5d-8684-be37fd545db9/server/src/index.ts",
+              "line": 209,
+              "snippet": "        fetch: (url, init) => fetch(url, { ...init, headers }),"
+            }
+          },
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.14.2",
+      "license": "MIT",
+      "releaseDate": "2025-06-14",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 80,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "OX-2025-6CE3DC7613",
+            "description": "Server is listening with only a port number, which defaults to binding on 0.0.0.0 (all network interfaces). This exposes the server to external networks. Specify a host explicitly, preferably 'localhost' or '127.0.0.1' for internal-only access.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Identify victim's IP address and MCP Inspector port (default 6274) | Step 2: Connect from remote machine to http://<victim-ip>:6274 | Step 3: Access MCP Inspector interface to view/manipulate MCP tools | Result: Remote access to MCP debugging interface exposing tool configurations and execution capabilities",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-CWE-200",
+            "severity": "CRITICAL",
+            "category": "Network Exposure",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-3f3c7dbe-3548-4606-a802-808a3febfb19/client/bin/client.js",
+              "line": 57,
+              "snippet": "server.listen(port);"
+            }
+          },
+          {
+            "id": "OX-2025-1433D345E4",
+            "description": "SSRF vulnerability detected. The fetch API is being used with a user-controlled URL without validation. Attackers can make requests to internal services or cloud metadata endpoints. Validate URLs against an allowlist before making requests.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Attacker prompts LLM to proxy request to internal endpoint (e.g., 'fetch http://localhost:8080/admin') | Step 2: MCP server executes fetch(url) with attacker URL at line 209 | Step 3: Internal service responds, data returned to attacker via LLM | Result: SSRF enables internal network reconnaissance and data exfiltration",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:L",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "REQUIRED",
+                "scope": "CHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "LOW",
+                "availabilityImpact": "LOW",
+                "baseScore": 9,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 2.8,
+              "impactScore": 5.4
+            },
+            "cwe": "CWE-CWE-918",
+            "severity": "CRITICAL",
+            "category": "Dangerous Operations",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-3f3c7dbe-3548-4606-a802-808a3febfb19/server/src/index.ts",
+              "line": 209,
+              "snippet": "        fetch: (url, init) => fetch(url, { ...init, headers }),"
+            }
+          },
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.14.1",
+      "license": "MIT",
+      "releaseDate": "2025-06-13",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 90,
+          "vulnerability": 20,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          }
+        ]
+      }
+    },
+    {
+      "version": "0.14.0",
+      "license": "MIT",
+      "releaseDate": "2025-06-04",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 80,
+          "vulnerability": 80,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 10000,
+        "trend": "decreasing",
+        "vulnerabilities": [
+          {
+            "id": "OX-2025-CFEB843FB8",
+            "description": "Server is listening with only a port number, which defaults to binding on 0.0.0.0 (all network interfaces). This exposes the server to external networks. Specify a host explicitly, preferably 'localhost' or '127.0.0.1' for internal-only access.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Identify victim's IP address and confirm port 6274 is accessible | Step 2: Connect to http://<victim-ip>:6274 from remote machine | Step 3: Access MCP Inspector interface without authentication, view server configuration and potentially interact with MCP tools",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-CWE-200",
+            "severity": "CRITICAL",
+            "category": "Network Exposure",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-467959bf-5d50-474b-8a14-b55b4491b998/client/bin/client.js",
+              "line": 57,
+              "snippet": "server.listen(port);"
+            }
+          },
+          {
+            "id": "CVE-2025-58444",
+            "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server\n\nAffected versions: < 0.16.6\n\nAn XSS flaw exists in the MCP Inspector local development tool when it renders a redirect URL returned by a remote MCP server. If the Inspector connects to an untrusted server, a crafted redirect can inject script into the Inspector context and, via the built-in proxy, be leveraged to trigger arbitrary command execution on the developer machine. Version 0.16.6 hardens URL handling/validation and prevents script execution.\n\n> Thank you to the following researchers for their reports and contributions:\n> * Raymond (Veria Labs)\n> * Gavin Zhong, <superboyzjc@gmail.com> & Shuyang Wang, <swang@obsidiansecurity.com>.",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Craft malicious payload targeting the vulnerability",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "HIGH"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-79",
+            "publishedDate": "2025-09-08T21:14:23Z",
+            "lastModifiedDate": "2025-09-26T17:07:03Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.16.6"
+          },
+          {
+            "id": "CVE-2025-49596",
+            "description": "MCP Inspector proxy server lacks authentication between the Inspector client and proxy\n\nAffected versions: < 0.14.1\n\nVersions of MCP Inspector below 0.14.1 are vulnerable to remote code execution due to lack of authentication between the Inspector client and proxy, allowing unauthenticated requests to launch MCP commands over stdio. Users should immediately upgrade to version 0.14.1 or later to address these vulnerabilities.\n\nCredit: Rémy Marot <bughunters@tenable.com>",
+            "isOxOriginal": false,
+            "exploitationSteps": "Establish network connection to vulnerable service | Bypass authentication or authorization checks",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 0,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 0,
+              "impactScore": 0
+            },
+            "cwe": "CWE-306",
+            "publishedDate": "2025-06-13T22:15:26Z",
+            "lastModifiedDate": "2025-07-09T20:18:38Z",
+            "references": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "affectedVersionRange": "< 0.14.1"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "identifier": "jonocx/strava-mcp/strava-mcp",
+  "name": "Strava Integration",
+  "description": "Integrate Strava data with Claude Desktop to access insights and information about fitness activities. Track and manage your fitness data directly from your Strava account through this MCP.",
+  "platform": "python",
+  "firstReleaseDate": "2025-04-11",
+  "isOfficial": false,
+  "isCommunity": true,
+  "isHostable": true,
+  "repository": {
+    "provider": "github.com",
+    "url": "https://github.com/JonoCX/strava-mcp"
+  },
+  "versions": [
+    {
+      "version": "latest",
+      "license": "Apache-2.0",
+      "releaseDate": "2025-04-11",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 0,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 1000,
+        "trend": "stable",
+        "vulnerabilities": []
+      }
+    }
+  ]
+}

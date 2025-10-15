@@ -1,0 +1,227 @@
+{
+  "identifier": "maton-ai/agent-toolkit/agent-toolkit",
+  "name": "Maton MCP Server",
+  "description": "Integrate with various SaaS tools such as HubSpot and Salesforce through function calling. Supports a range of API actions for interacting with Maton services.",
+  "platform": "unknown",
+  "firstReleaseDate": "2025-05-22",
+  "isOfficial": false,
+  "isCommunity": true,
+  "isHostable": true,
+  "repository": {
+    "provider": "github.com",
+    "url": "https://github.com/maton-ai/agent-toolkit"
+  },
+  "versions": [
+    {
+      "version": "latest",
+      "license": "MIT",
+      "releaseDate": "2025-05-22",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 100,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 1000,
+        "trend": "stable",
+        "vulnerabilities": [
+          {
+            "id": "OX-2025-177713A1A2",
+            "description": "Potential prompt injection vulnerability detected. This MCP tool returns data from an external source \ndirectly to the LLM without sanitization. External domains may be controlled or influenced by untrusted \nusers (e.g., blog comments, GitHub issues, public APIs), which could lead to prompt injection attacks.\n\nRecommendation: \n1. Validate and sanitize all external data before returning it to the LLM\n2. Implement content filtering to detect malicious prompts\n3. Consider using a security layer to analyze external content\n4. Add warnings in the MCP tool description about untrusted data sources\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Exploit the vulnerability | Step 2: Gain unauthorized access | Step 3: Execute malicious actions",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-unknown",
+            "severity": "CRITICAL",
+            "category": "injection",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-82650cd4-2b40-485b-90f6-8878965df1c9/typescript/src/shared/api.ts",
+              "line": 8,
+              "snippet": "  async createConnection(app: string): Promise<any> {\n    const body = {app};\n    const response = await fetch('https://api.maton.ai/create-connection', {\n      method: 'POST',\n      headers: this.headers,\n      body: JSON.stringify(body),\n    });\n    return response.json();\n  }"
+            }
+          },
+          {
+            "id": "OX-2025-177713A1A2",
+            "description": "Potential prompt injection vulnerability detected. This MCP tool returns data from an external source \ndirectly to the LLM without sanitization. External domains may be controlled or influenced by untrusted \nusers (e.g., blog comments, GitHub issues, public APIs), which could lead to prompt injection attacks.\n\nRecommendation: \n1. Validate and sanitize all external data before returning it to the LLM\n2. Implement content filtering to detect malicious prompts\n3. Consider using a security layer to analyze external content\n4. Add warnings in the MCP tool description about untrusted data sources\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Exploit the vulnerability | Step 2: Gain unauthorized access | Step 3: Execute malicious actions",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-unknown",
+            "severity": "CRITICAL",
+            "category": "injection",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-82650cd4-2b40-485b-90f6-8878965df1c9/typescript/src/shared/api.ts",
+              "line": 18,
+              "snippet": "  async getConnection(connectionId: string): Promise<any> {\n    const body = {connection_id: connectionId};\n    const response = await fetch('https://api.maton.ai/get-connection', {\n      method: 'POST',\n      headers: this.headers,\n      body: JSON.stringify(body),\n    });\n    return response.json();\n  }"
+            }
+          },
+          {
+            "id": "OX-2025-177713A1A2",
+            "description": "Potential prompt injection vulnerability detected. This MCP tool returns data from an external source \ndirectly to the LLM without sanitization. External domains may be controlled or influenced by untrusted \nusers (e.g., blog comments, GitHub issues, public APIs), which could lead to prompt injection attacks.\n\nRecommendation: \n1. Validate and sanitize all external data before returning it to the LLM\n2. Implement content filtering to detect malicious prompts\n3. Consider using a security layer to analyze external content\n4. Add warnings in the MCP tool description about untrusted data sources\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Exploit the vulnerability | Step 2: Gain unauthorized access | Step 3: Execute malicious actions",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-unknown",
+            "severity": "CRITICAL",
+            "category": "injection",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-82650cd4-2b40-485b-90f6-8878965df1c9/typescript/src/shared/api.ts",
+              "line": 28,
+              "snippet": "  async listConnections(app?: string, status?: string): Promise<any> {\n    const body = {app, status};\n    const response = await fetch('https://api.maton.ai/list-connections', {\n      method: 'POST',\n      headers: this.headers,\n      body: JSON.stringify(body),\n    });\n    return response.json();\n  }"
+            }
+          },
+          {
+            "id": "OX-2025-177713A1A2",
+            "description": "Potential prompt injection vulnerability detected. This MCP tool returns data from an external source \ndirectly to the LLM without sanitization. External domains may be controlled or influenced by untrusted \nusers (e.g., blog comments, GitHub issues, public APIs), which could lead to prompt injection attacks.\n\nRecommendation: \n1. Validate and sanitize all external data before returning it to the LLM\n2. Implement content filtering to detect malicious prompts\n3. Consider using a security layer to analyze external content\n4. Add warnings in the MCP tool description about untrusted data sources\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Exploit the vulnerability | Step 2: Gain unauthorized access | Step 3: Execute malicious actions",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-unknown",
+            "severity": "CRITICAL",
+            "category": "injection",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-82650cd4-2b40-485b-90f6-8878965df1c9/typescript/src/shared/api.ts",
+              "line": 38,
+              "snippet": "  async deleteConnection(connectionId: string): Promise<any> {\n    const body = {connection_id: connectionId};\n    const response = await fetch('https://api.maton.ai/delete-connection', {\n      method: 'POST',\n      headers: this.headers,\n      body: JSON.stringify(body),\n    });\n    return response.json();\n  }"
+            }
+          },
+          {
+            "id": "OX-2025-177713A1A2",
+            "description": "Potential prompt injection vulnerability detected. This MCP tool returns data from an external source \ndirectly to the LLM without sanitization. External domains may be controlled or influenced by untrusted \nusers (e.g., blog comments, GitHub issues, public APIs), which could lead to prompt injection attacks.\n\nRecommendation: \n1. Validate and sanitize all external data before returning it to the LLM\n2. Implement content filtering to detect malicious prompts\n3. Consider using a security layer to analyze external content\n4. Add warnings in the MCP tool description about untrusted data sources\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Exploit the vulnerability | Step 2: Gain unauthorized access | Step 3: Execute malicious actions",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-unknown",
+            "severity": "CRITICAL",
+            "category": "injection",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-82650cd4-2b40-485b-90f6-8878965df1c9/typescript/src/shared/api.ts",
+              "line": 48,
+              "snippet": "  async invokeAction(\n    app: string,\n    action: string,\n    args: {[key: string]: any}\n  ): Promise<any> {\n    const body = {\n      app: app,\n      action: action,\n      args: args,\n    };\n    const response = await fetch('https://api.maton.ai/invoke-action', {\n      method: 'POST',\n      headers: this.headers,\n      body: JSON.stringify(body),\n    });\n\n    return response.json();\n  }"
+            }
+          },
+          {
+            "id": "OX-2025-177713A1A2",
+            "description": "Potential prompt injection vulnerability detected. This MCP tool returns data from an external source \ndirectly to the LLM without sanitization. External domains may be controlled or influenced by untrusted \nusers (e.g., blog comments, GitHub issues, public APIs), which could lead to prompt injection attacks.\n\nRecommendation: \n1. Validate and sanitize all external data before returning it to the LLM\n2. Implement content filtering to detect malicious prompts\n3. Consider using a security layer to analyze external content\n4. Add warnings in the MCP tool description about untrusted data sources\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Exploit the vulnerability | Step 2: Gain unauthorized access | Step 3: Execute malicious actions",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-unknown",
+            "severity": "CRITICAL",
+            "category": "injection",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-82650cd4-2b40-485b-90f6-8878965df1c9/typescript/src/shared/api.ts",
+              "line": 67,
+              "snippet": "  async invokeAgent(app: string, userPrompt: string): Promise<any> {\n    const body = {\n      app: app,\n      user_prompt: userPrompt,\n    };\n    const response = await fetch('https://api.maton.ai/invoke-agent', {\n      method: 'POST',\n      headers: this.headers,\n      body: JSON.stringify(body),\n    });\n\n    return response.json();\n  }"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

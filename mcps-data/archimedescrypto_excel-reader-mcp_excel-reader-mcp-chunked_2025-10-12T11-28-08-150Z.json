@@ -1,0 +1,67 @@
+{
+  "identifier": "archimedescrypto/excel-reader-mcp/excel-reader-mcp-chunked",
+  "name": "Excel Reader",
+  "description": "Read Excel files with support for automatic chunking and pagination, enabling efficient data handling for large datasets. This server can process multiple sheet selections and provides proper handling of date formats.",
+  "platform": "nodejs",
+  "firstReleaseDate": "2025-07-28",
+  "isOfficial": false,
+  "isCommunity": true,
+  "isHostable": true,
+  "repository": {
+    "provider": "github.com",
+    "url": "https://github.com/ArchimedesCrypto/excel-reader-mcp"
+  },
+  "versions": [
+    {
+      "version": "latest",
+      "license": "MIT",
+      "releaseDate": "2025-07-28",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 50,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 1000,
+        "trend": "stable",
+        "vulnerabilities": [
+          {
+            "id": "OX-2025-21A306DE33",
+            "description": "Possible path traversal vulnerability. File system operations are using user-controlled input without proper validation. Attackers could use '../' sequences to access files outside the intended directory. Validate and sanitize file paths before use.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Attacker crafts prompt to make LLM call read_excel({filePath: '../../.ssh/id_rsa'}) | Step 2: MCP server executes readFileSync('../../.ssh/id_rsa') at line 104 | Step 3: Private SSH key contents returned to attacker via LLM response",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+                "attackVector": "LOCAL",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "REQUIRED",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "NONE",
+                "availabilityImpact": "NONE",
+                "baseScore": 5.5,
+                "baseSeverity": "MEDIUM"
+              },
+              "exploitabilityScore": 1.8,
+              "impactScore": 3.6
+            },
+            "cwe": "CWE-CWE-22",
+            "severity": "HIGH",
+            "category": "Path Traversal",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-5be57f28-118b-400b-a6bc-d6c65d9bdb44/src/index.ts",
+              "line": 104,
+              "snippet": "      const data = readFileSync(filePath);"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

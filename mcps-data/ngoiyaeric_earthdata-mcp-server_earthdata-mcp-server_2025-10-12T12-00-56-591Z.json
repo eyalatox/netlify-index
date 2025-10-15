@@ -1,0 +1,34 @@
+{
+  "identifier": "ngoiyaeric/earthdata-mcp-server/earthdata-mcp-server",
+  "name": "Earthdata MCP Server",
+  "description": "Enables efficient dataset discovery and retrieval for geospatial analysis using NASA Earth Data. Facilitates seamless interaction with datasets and data granules to enhance data-driven projects.",
+  "platform": "python",
+  "firstReleaseDate": "2025-08-30",
+  "isOfficial": false,
+  "isCommunity": true,
+  "isHostable": true,
+  "repository": {
+    "provider": "github.com",
+    "url": "https://github.com/ngoiyaeric/earthdata-mcp-server"
+  },
+  "versions": [
+    {
+      "version": "latest",
+      "license": "BSD-3-Clause",
+      "releaseDate": "2025-08-30",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 0,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 1000,
+        "trend": "stable",
+        "vulnerabilities": []
+      }
+    }
+  ]
+}
