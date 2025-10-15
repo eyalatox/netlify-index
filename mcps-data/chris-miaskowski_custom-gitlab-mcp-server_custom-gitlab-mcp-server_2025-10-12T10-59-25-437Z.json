@@ -1,0 +1,163 @@
+{
+  "identifier": "chris-miaskowski/custom-gitlab-mcp-server/custom-gitlab-mcp-server",
+  "name": "Custom GitLab Server",
+  "description": "Integrate AI assistants with GitLab repositories to manage files, issues, and merge requests. Perform actions like searching for repositories, updating files, and forking projects.",
+  "platform": "nodejs",
+  "firstReleaseDate": "2025-03-07",
+  "isOfficial": false,
+  "isCommunity": true,
+  "isHostable": true,
+  "repository": {
+    "provider": "github.com",
+    "url": "https://github.com/chris-miaskowski/custom-gitlab-mcp-server"
+  },
+  "versions": [
+    {
+      "version": "latest",
+      "license": "ISC",
+      "releaseDate": "2025-03-07",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 60,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 1000,
+        "trend": "stable",
+        "vulnerabilities": [
+          {
+            "id": "OX-2025-100ADDF815",
+            "description": "SSRF vulnerability detected. The fetch API is being used with a user-controlled URL without validation. Attackers can make requests to internal services or cloud metadata endpoints. Validate URLs against an allowlist before making requests.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Attacker prompts LLM to call searchRepositories with query='test' | Step 2: LLM calls MCP tool with malicious GITLAB_API_URL override or crafted projectId containing URL | Step 3: fetch() sends authenticated request to http://localhost:6379/ (Redis) or http://169.254.169.254/latest/meta-data/ (cloud metadata) | Step 4: Response returned to attacker via LLM, exposing internal services or credentials",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "REQUIRED",
+                "scope": "CHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "NONE",
+                "baseScore": 9.5,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 2.8,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-918",
+            "severity": "CRITICAL",
+            "category": "ssrf",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-938f9a72-dfdf-49f3-834b-91ed941d1d6b/index.js",
+              "line": 237,
+              "snippet": "  const response = await fetch(url, {\n    method,\n    headers: {\n      \"Authorization\": `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,\n      \"Content-Type\": \"application/json\"\n    },\n    body: JSON.stringify(body)\n  });"
+            }
+          },
+          {
+            "id": "OX-2025-100ADDF815",
+            "description": "SSRF vulnerability detected. The fetch API is being used with a user-controlled URL without validation. Attackers can make requests to internal services or cloud metadata endpoints. Validate URLs against an allowlist before making requests.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Attacker tricks LLM into calling push_files with victim's projectId | Step 2: MCP tool commits malicious files (CI config, hooks, etc.) to victim repository | Step 3: CI/CD executes attacker's code or repository is compromised | Result: RCE in CI/CD environment, data theft, supply chain attack",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "REQUIRED",
+                "scope": "CHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.6,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 2.8,
+              "impactScore": 6
+            },
+            "cwe": "CWE-918",
+            "severity": "CRITICAL",
+            "category": "ssrf",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-938f9a72-dfdf-49f3-834b-91ed941d1d6b/index.js",
+              "line": 289,
+              "snippet": "  const response = await fetch(\n    `${GITLAB_API_URL}/projects/${encodeURIComponent(projectId)}/repository/commits`,\n    {\n      method: \"POST\",\n      headers: {\n        \"Authorization\": `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,\n        \"Content-Type\": \"application/json\"\n      },\n      body: JSON.stringify({\n        branch,\n        commit_message: message,\n        actions: actions.map(action => ({\n          action: \"create\",\n          file_path: action.path,\n          content: action.content\n        }))\n      })\n    }\n  );"
+            }
+          },
+          {
+            "id": "OX-2025-691A209EB0",
+            "description": "Potential XXE vulnerability with fast-xml-parser. When processEntities is not explicitly set to false, the parser may process external entities. Configure the parser with { processEntities: false } to prevent XXE attacks.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Attacker crafts prompt to make LLM call create_or_update_file with path='../../.gitlab-ci.yml', content='malicious CI/CD pipeline' | Step 2: MCP server accepts parameters and constructs GitLab API request | Step 3: Malicious file written to repository, executing arbitrary code in CI/CD pipeline | Result: Code execution in victim's GitLab infrastructure, data exfiltration, supply chain attack",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "LOW",
+                "userInteraction": "REQUIRED",
+                "scope": "CHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 2.3,
+              "impactScore": 6
+            },
+            "cwe": "CWE-unknown",
+            "severity": "CRITICAL",
+            "category": "other",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-938f9a72-dfdf-49f3-834b-91ed941d1d6b/index.js",
+              "line": 466,
+              "snippet": "        const args = CreateOrUpdateFileSchema.parse(request.params.arguments);"
+            }
+          },
+          {
+            "id": "OX-2025-691A209EB0",
+            "description": "Potential XXE vulnerability with fast-xml-parser. When processEntities is not explicitly set to false, the parser may process external entities. Configure the parser with { processEntities: false } to prevent XXE attacks.\n",
+            "isOxOriginal": true,
+            "exploitationSteps": "Step 1: Exploit the vulnerability | Step 2: Gain unauthorized access | Step 3: Execute malicious actions",
+            "baseMetricV3": {
+              "cvssV3": {
+                "version": "3.1",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "attackVector": "NETWORK",
+                "attackComplexity": "LOW",
+                "privilegesRequired": "NONE",
+                "userInteraction": "NONE",
+                "scope": "UNCHANGED",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "availabilityImpact": "HIGH",
+                "baseScore": 9.8,
+                "baseSeverity": "CRITICAL"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 5.9
+            },
+            "cwe": "CWE-unknown",
+            "severity": "CRITICAL",
+            "category": "other",
+            "location": {
+              "file": "/var/folders/hg/dbf3m3rn0hv9vbx5wqqn__ph0000gn/T/mcp-scan-938f9a72-dfdf-49f3-834b-91ed941d1d6b/index.js",
+              "line": 490,
+              "snippet": "        const args = CreateIssueSchema.parse(request.params.arguments);"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "identifier": "seohyunjun/opensearch-mcp-server/opensearch-mcp-server",
+  "name": "OpenSearch MCP Server",
+  "description": "Interact with your OpenSearch cluster for document search, index analysis, and cluster management using natural language commands. Provides a comprehensive set of tools for simplifying data operations.",
+  "platform": "python",
+  "firstReleaseDate": "2025-05-10",
+  "isOfficial": false,
+  "isCommunity": true,
+  "isHostable": true,
+  "repository": {
+    "provider": "github.com",
+    "url": "https://github.com/seohyunjun/opensearch-mcp-server"
+  },
+  "versions": [
+    {
+      "version": "latest",
+      "license": "Apache-2.0",
+      "releaseDate": "2025-05-10",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 0,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 1000,
+        "trend": "stable",
+        "vulnerabilities": []
+      }
+    }
+  ]
+}

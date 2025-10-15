@@ -1,0 +1,34 @@
+{
+  "identifier": "zueai/workos-mcp/workos-mcp",
+  "name": "WorkOS MCP Server",
+  "description": "Facilitates interactions between agents and the WorkOS API, enabling functionalities like user management and organization handling.",
+  "platform": "nodejs",
+  "firstReleaseDate": "2025-02-26",
+  "isOfficial": false,
+  "isCommunity": true,
+  "isHostable": true,
+  "repository": {
+    "provider": "github.com",
+    "url": "https://github.com/zueai/workos-mcp"
+  },
+  "versions": [
+    {
+      "version": "latest",
+      "license": "MIT",
+      "releaseDate": "2025-02-26",
+      "securityReview": {
+        "scores": {
+          "supplyChainSecurity": 100,
+          "vulnerability": 0,
+          "quality": 75,
+          "maintainabile": 80,
+          "license": 100
+        },
+        "isMalicious": false,
+        "weeklyDownloads": 1000,
+        "trend": "stable",
+        "vulnerabilities": []
+      }
+    }
+  ]
+}

@@ -1,59 +1,110 @@
-import { Search, Star } from "lucide-react";
+import { Search } from "lucide-react";
 import Link from "next/link";
-
-// Mock data for packages
-const packages = [
-  {
-    id: 1,
-    name: "example-mcp-server",
-    author: "modelcontextprotocol",
-    description: "Example implementation demonstrating core Model Context Protocol features",
-    tags: ["example", "demo"],
-    category: "Other Servers",
-    stats: { weekly: 10, total: 50 },
-    updated: "2 days ago"
-  },
-  {
-    id: 2,
-    name: "example-servers-php",
-    author: "modelcontextprotocol", 
-    description: "Example servers showcasing Model Context Protocol implementation in PHP",
-    tags: ["php", "servers"],
-    category: "Other Servers",
-    stats: { weekly: 10, total: 100 },
-    updated: "2 days ago"
-  },
-  {
-    id: 3,
-    name: "example-servers-python",
-    author: "modelcontextprotocol",
-    description: "Python server examples for Model Context Protocol development",
-    tags: ["python", "servers"],
-    category: "Other Servers", 
-    stats: { weekly: 50, total: 150 },
-    updated: "2 days ago"
-  },
-  {
-    id: 4,
-    name: "everything-mcp",
-    author: "modelcontextprotocol",
-    description: "Comprehensive collection of Model Context Protocol implementations", 
-    tags: ["comprehensive", "collection"],
-    category: "Other Servers",
-    stats: { weekly: 50, total: 10 },
-    updated: "2 days ago"
-  }
-];
-
-const categories = [
-  "Other Servers", "Data Sources", "Other Servers", "Other Servers", "Other Servers", "Other Servers",
-  "Other Servers", "Other Servers", "Other Servers", "Other Servers", "Other Servers", "Other Servers",
-  "Other Servers", "Other Servers", "Other Servers", "Other Servers", "Other Servers", "Other Servers"
-];
-
-const stats = { total: 14914, weekly: 50, daily: 50, monthly: 100 };
+import { getAllMCPData } from "@/lib/mcpData";
+import PackageList from "@/components/PackageList";
 
 export default function Home() {
+  // Load all MCP data from JSON files
+  const allMCPs = getAllMCPData();
+  
+  // Generate real statistics - calculate packages added over time
+  const now = new Date();
+  const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  
+  // Count packages added in different time periods
+  // Use _fileDate (when file was added) instead of firstReleaseDate (when package was released)
+  const dailyAdded = allMCPs.filter(mcp => {
+    const addedDate = new Date(mcp._fileDate || mcp.firstReleaseDate);
+    return addedDate >= oneDayAgo;
+  }).length;
+  
+  const weeklyAdded = allMCPs.filter(mcp => {
+    const addedDate = new Date(mcp._fileDate || mcp.firstReleaseDate);
+    return addedDate >= oneWeekAgo;
+  }).length;
+  
+  const monthlyAdded = allMCPs.filter(mcp => {
+    const addedDate = new Date(mcp._fileDate || mcp.firstReleaseDate);
+    return addedDate >= oneMonthAgo;
+  }).length;
+  
+  const stats = {
+    total: allMCPs.length,
+    weekly: weeklyAdded,
+    daily: dailyAdded,
+    monthly: monthlyAdded
+  };
+  
+  // Extract unique categories from the data
+  const categorySet = new Set<string>();
+  allMCPs.forEach(mcp => {
+    if (mcp.isOfficial) categorySet.add('Official');
+    if (mcp.isCommunity) categorySet.add('Community');
+    categorySet.add(mcp.platform);
+    
+    // Add category based on name patterns
+    const name = mcp.name.toLowerCase();
+    if (name.includes('database') || name.includes('mongo') || name.includes('sql')) {
+      categorySet.add('Databases');
+    } else if (name.includes('gitlab') || name.includes('github')) {
+      categorySet.add('Version Control');
+    } else if (name.includes('pdf') || name.includes('excel') || name.includes('reader')) {
+      categorySet.add('Document Processing');
+    } else if (name.includes('earth') || name.includes('data')) {
+      categorySet.add('Data Sources');
+    } else if (name.includes('inspector') || name.includes('toolkit')) {
+      categorySet.add('Development Tools');
+    } else {
+      categorySet.add('Other Servers');
+    }
+  });
+  
+  const categories = Array.from(categorySet);
+  
+  // Convert MCP data to package format
+  const packages = allMCPs.map((mcp, index) => {
+    const latestVersion = mcp.versions[0];
+    const nameParts = mcp.identifier.split('/');
+    const packageName = nameParts[nameParts.length - 1];
+    
+    // Determine category
+    let category = 'Other Servers';
+    if (mcp.isOfficial) category = 'Official';
+    else if (mcp.isCommunity) category = 'Community';
+    
+    // Calculate days since release
+    const releaseDate = new Date(latestVersion?.releaseDate || mcp.firstReleaseDate);
+    const now = new Date();
+    const daysSince = Math.floor((now.getTime() - releaseDate.getTime()) / (1000 * 60 * 60 * 24));
+    const updatedText = daysSince === 0 ? 'today' : daysSince === 1 ? 'yesterday' : `${daysSince} days ago`;
+    
+    return {
+      id: index + 1,
+      name: packageName,
+      displayName: mcp.name,
+      author: mcp.identifier.split('/')[0],
+      description: mcp.description,
+      tags: [mcp.platform, mcp.isOfficial ? 'official' : 'community'],
+      category,
+      stats: {
+        weekly: latestVersion?.securityReview?.weeklyDownloads || 0,
+        total: (latestVersion?.securityReview?.weeklyDownloads || 0) * 52
+      },
+      updated: updatedText,
+      vulnerabilities: latestVersion?.securityReview?.vulnerabilities?.length || 0,
+      securityScore: latestVersion?.securityReview ? Math.round(
+        (latestVersion.securityReview.scores.supplyChainSecurity * 0.25 +
+        latestVersion.securityReview.scores.vulnerability * 0.30 +
+        latestVersion.securityReview.scores.quality * 0.20 +
+        latestVersion.securityReview.scores.maintainabile * 0.15 +
+        latestVersion.securityReview.scores.license * 0.10)
+      ) : null,
+      isOfficial: mcp.isOfficial,
+      isCommunity: mcp.isCommunity
+    };
+  }).sort((a, b) => b.stats.weekly - a.stats.weekly); // Sort by popularity
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -84,17 +135,6 @@ export default function Home() {
             Browse the largest collection of Model Context Protocol packages. Find high-quality packages for all your development needs, from APIs to databases.
           </p>
           
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto relative mb-8">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search packages..."
-                className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-          </div>
 
           {/* Stats */}
           <div className="flex justify-center space-x-8 text-sm text-gray-600 mb-12">
@@ -103,12 +143,12 @@ export default function Home() {
               <div>Total</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">{stats.weekly}</div>
-              <div>Weekly</div>
-            </div>
-            <div className="text-center">
               <div className="text-2xl font-bold text-gray-900">{stats.daily}</div>
               <div>Daily</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900">{stats.weekly}</div>
+              <div>Weekly</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-gray-900">{stats.monthly}</div>
@@ -121,56 +161,55 @@ export default function Home() {
         <section className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Popular Categories</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.slice(0, 18).map((category, index) => (
-              <Link 
-                key={index}
-                href={`/category/${category.toLowerCase().replace(' ', '-')}`}
-                className="p-4 border border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition-colors"
-              >
-                <div className="w-12 h-12 bg-gray-100 rounded-lg mx-auto mb-2"></div>
-                <div className="text-sm font-medium text-gray-900">{category}</div>
-                <div className="text-xs text-gray-500">MCP Server</div>
-              </Link>
-            ))}
+            {categories.slice(0, 12).map((category, index) => {
+              // Count packages in this category
+              const count = packages.filter(pkg => 
+                pkg.category === category || 
+                pkg.tags.includes(category.toLowerCase()) ||
+                (category === 'nodejs' && pkg.tags.includes('nodejs')) ||
+                (category === 'Community' && pkg.isCommunity) ||
+                (category === 'Official' && pkg.isOfficial)
+              ).length;
+              
+              // Get icon/emoji for category
+              const getCategoryIcon = (cat: string) => {
+                if (cat === 'Official') return '🏅';
+                if (cat === 'Community') return '👥';
+                if (cat === 'nodejs') return '🟢';
+                if (cat === 'python') return '🐍';
+                if (cat === 'Databases') return '🗄️';
+                if (cat === 'Version Control') return '🔀';
+                if (cat === 'Document Processing') return '📄';
+                if (cat === 'Data Sources') return '📊';
+                if (cat === 'Development Tools') return '🛠️';
+                return '📦';
+              };
+              
+              return (
+                <Link 
+                  key={index}
+                  href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="p-4 border border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition-colors"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg mx-auto mb-2 flex items-center justify-center text-2xl">
+                    {getCategoryIcon(category)}
+                  </div>
+                  <div className="text-sm font-medium text-gray-900">{category}</div>
+                  <div className="text-xs text-gray-500">{count} {count === 1 ? 'package' : 'packages'}</div>
+                </Link>
+              );
+            })}
           </div>
           <div className="text-center mt-6">
             <Link href="/categories" className="text-blue-600 hover:text-blue-800 font-medium">
-              View all →
+              View all {categories.length} categories →
             </Link>
           </div>
         </section>
 
-        {/* All Packages */}
+        {/* All Packages with Search */}
         <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">All Packages</h2>
-          <div className="space-y-4">
-            {packages.map((pkg) => (
-              <Link 
-                key={pkg.id}
-                href={`/package/${pkg.name}`}
-                className="block p-6 border border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900">{pkg.name}</h3>
-                      <span className="text-sm text-gray-500">by {pkg.author}</span>
-                    </div>
-                    <p className="text-gray-600 mb-3">{pkg.description}</p>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
-                      <span className="bg-gray-100 px-2 py-1 rounded">{pkg.category}</span>
-                      <span>Weekly: {pkg.stats.weekly}</span>
-                      <span>Total: {pkg.stats.total}</span>
-                      <span>Updated {pkg.updated}</span>
-                    </div>
-                  </div>
-                  <button className="text-gray-400 hover:text-yellow-500">
-                    <Star className="w-5 h-5" />
-                  </button>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <PackageList packages={packages} />
         </section>
       </main>
     </div>

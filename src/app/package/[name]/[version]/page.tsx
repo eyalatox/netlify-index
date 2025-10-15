@@ -1,4 +1,4 @@
-import { ArrowLeft, Star, Download, ExternalLink, Github, Users, Calendar, ArrowUpRight, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Star, Download, ExternalLink, Github, Users, Calendar, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { loadMCPData, getAllMCPData } from "@/lib/mcpData";
 import { fetchGitHubReadme } from "@/lib/githubFetcher";
@@ -6,35 +6,33 @@ import MarkdownRenderer from "@/components/MarkdownRenderer";
 import SecurityScore from "@/components/SecurityScore";
 import VersionSelector from "@/components/VersionSelector";
 
-interface PackagePageProps {
-  params: Promise<{ name: string }>;
+interface VersionPageProps {
+  params: Promise<{ name: string; version: string }>;
 }
 
-// Generate static paths for the packages we want to pre-render
+// Generate static paths for version-specific pages
 export async function generateStaticParams() {
-  // Get all MCP data from JSON files
   const allMCPs = getAllMCPData();
+  const paths: { name: string; version: string }[] = [];
   
-  // Generate paths from actual data
-  const paths = allMCPs.map(mcp => {
+  allMCPs.forEach(mcp => {
     const nameParts = mcp.identifier.split('/');
-    return { name: nameParts[nameParts.length - 1] };
+    const packageName = nameParts[nameParts.length - 1];
+    
+    // Generate a path for each version
+    mcp.versions.forEach(version => {
+      paths.push({
+        name: packageName,
+        version: version.version
+      });
+    });
   });
   
-  // Also include some default packages
-  const defaultPaths = [
-    { name: 'serverless' },
-    { name: 'example-mcp-server' },
-    { name: 'example-servers-php' },
-    { name: 'example-servers-python' },
-    { name: 'everything-mcp' },
-  ];
-  
-  return [...paths, ...defaultPaths];
+  return paths;
 }
 
-export default async function PackagePage({ params }: PackagePageProps) {
-  const { name } = await params;
+export default async function VersionPage({ params }: VersionPageProps) {
+  const { name, version } = await params;
   
   // Load MCP data from JSON files
   const mcpData = loadMCPData(name);
@@ -45,29 +43,29 @@ export default async function PackagePage({ params }: PackagePageProps) {
     readmeContent = await fetchGitHubReadme(mcpData.repository.url);
   }
   
-  // Use the latest version by default
-  const latestVersion = mcpData?.versions?.[0];
+  // Find the specific version
+  const selectedVersion = mcpData?.versions?.find(v => v.version === version) || mcpData?.versions?.[0];
   
   // Fallback data if MCP data not found
   const packageData = mcpData ? {
     name: mcpData.name,
     fullName: mcpData.identifier,
-    version: latestVersion?.version || "1.0.0",
+    version: selectedVersion?.version || "1.0.0",
     description: mcpData.description,
     author: mcpData.identifier.split('/')[0],
     category: mcpData.isOfficial ? "Official" : mcpData.isCommunity ? "Community" : "Other Servers",
     tags: [mcpData.platform, mcpData.isOfficial ? "official" : "community"],
     stats: {
-      weekly: latestVersion?.securityReview?.weeklyDownloads || 0,
-      total: latestVersion?.securityReview?.weeklyDownloads || 0,
+      weekly: selectedVersion?.securityReview?.weeklyDownloads || 0,
+      total: selectedVersion?.securityReview?.weeklyDownloads || 0,
       starCount: 1,
-      downloadCount: latestVersion?.securityReview?.weeklyDownloads || 0
+      downloadCount: selectedVersion?.securityReview?.weeklyDownloads || 0
     },
-    lastUpdated: latestVersion?.releaseDate ? new Date(latestVersion.releaseDate).toLocaleDateString() : "Unknown",
+    lastUpdated: selectedVersion?.releaseDate ? new Date(selectedVersion.releaseDate).toLocaleDateString() : "Unknown",
     maintainers: [mcpData.identifier.split('/')[0]],
     repository: mcpData.repository.url,
     homepage: mcpData.repository.url,
-    license: latestVersion?.license || "MIT",
+    license: selectedVersion?.license || "MIT",
     platform: mcpData.platform,
     isOfficial: mcpData.isOfficial,
     isCommunity: mcpData.isCommunity,
@@ -75,7 +73,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
   } : {
     name: name,
     fullName: name,
-    version: "1.0.0",
+    version: version,
     description: "Package information not available",
     author: "unknown",
     category: "Other Servers",
@@ -126,7 +124,9 @@ export default async function PackagePage({ params }: PackagePageProps) {
             Packages
           </Link>
           <span>/</span>
-          <span className="text-gray-900">{packageData.name}</span>
+          <Link href={`/package/${name}`} className="hover:text-gray-900">{packageData.name}</Link>
+          <span>/</span>
+          <span className="text-gray-900">{version}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -138,6 +138,9 @@ export default async function PackagePage({ params }: PackagePageProps) {
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <h1 className="text-3xl font-bold text-gray-900">{packageData.name}</h1>
+                    <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded">
+                      v{packageData.version}
+                    </span>
                     {packageData.isOfficial && (
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
                         Official
@@ -194,6 +197,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
               <VersionSelector 
                 versions={mcpData.versions} 
                 packageName={name}
+                currentVersion={version}
               />
             )}
 
@@ -228,8 +232,8 @@ export default async function PackagePage({ params }: PackagePageProps) {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Security Score Card */}
-            {latestVersion?.securityReview && (
-              <SecurityScore securityReview={latestVersion.securityReview} />
+            {selectedVersion?.securityReview && (
+              <SecurityScore securityReview={selectedVersion.securityReview} />
             )}
 
             {/* Install Card */}
@@ -252,7 +256,7 @@ export default async function PackagePage({ params }: PackagePageProps) {
                 </div>
                 <div className="pt-2">
                   <code className="block p-3 bg-gray-900 text-white rounded text-sm">
-                    npm install {packageData.fullName}
+                    npm install {packageData.fullName}@{packageData.version}
                   </code>
                 </div>
               </div>
@@ -342,3 +346,4 @@ export default async function PackagePage({ params }: PackagePageProps) {
     </div>
   );
 }
+
