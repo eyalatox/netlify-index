@@ -7,10 +7,24 @@
   "isOfficial": false,
   "isCommunity": true,
   "isHostable": true,
+  "stars": 123,
+  "forks": 28,
+  "openIssues": 6,
+  "watchers": 123,
   "repository": {
     "provider": "github.com",
     "url": "https://github.com/seohyunjun/opensearch-mcp-server"
   },
+  "maintainers": [
+    {
+      "login": "seohyunjun",
+      "name": "Seo Hyun Jun",
+      "email": "seohyunjun@example.com",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/78901?v=4",
+      "htmlUrl": "https://github.com/seohyunjun",
+      "type": "User"
+    }
+  ],
   "versions": [
     {
       "version": "latest",

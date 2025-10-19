@@ -6,22 +6,27 @@ import Link from "next/link";
 import SearchBar from './SearchBar';
 
 interface Package {
-  id: number;
+  id?: number;
   name: string;
   displayName: string;
   author: string;
   description: string;
-  tags: string[];
-  category: string;
-  stats: {
+  tags?: string[];
+  category?: string;
+  stats?: {
     weekly: number;
     total: number;
   };
-  updated: string;
-  vulnerabilities: number;
-  securityScore: number | null;
+  updated?: string;
+  vulnerabilities?: number;
+  securityScore?: number | null;
   isOfficial: boolean;
   isCommunity: boolean;
+  stars: number;
+  forks: number;
+  openIssues: number;
+  platform?: string;
+  firstReleaseDate?: string;
 }
 
 interface PackageListProps {
@@ -64,21 +69,29 @@ export default function PackageList({ packages }: PackageListProps) {
 
   return (
     <div>
+      {/* Section Header */}
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">All Packages</h2>
+        <p className="text-gray-600">Browse all available MCP packages</p>
+      </div>
+
       {/* Search Bar */}
-      <SearchBar onSearch={setSearchQuery} />
+      <div className="mb-8">
+        <SearchBar onSearch={setSearchQuery} />
+      </div>
 
       {/* Results Header */}
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h3 className="text-xl font-semibold text-gray-900">
           {searchQuery ? (
             <>
               Search Results for "{searchQuery}" 
               <span className="text-gray-500 text-lg ml-2">({sortedPackages.length})</span>
             </>
           ) : (
-            <>All Packages ({packages.length})</>
+            <>Showing {sortedPackages.length} packages</>
           )}
-        </h2>
+        </h3>
         <select 
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
@@ -105,71 +118,71 @@ export default function PackageList({ packages }: PackageListProps) {
       )}
 
       {/* Package List */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {sortedPackages.map((pkg) => (
           <Link 
             key={pkg.id}
             href={`/package/${pkg.name}`}
-            className="block p-6 border border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
+            className="block p-4 border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-sm transition-all"
           >
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2 flex-wrap">
-                  <h3 className="text-lg font-semibold text-gray-900">{pkg.displayName}</h3>
-                  <span className="text-sm text-gray-500">by {pkg.author}</span>
-                  
-                  {pkg.isOfficial && (
-                    <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                      Official
-                    </span>
-                  )}
-                  {pkg.isCommunity && (
-                    <span className="px-2 py-0.5 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                      Community
-                    </span>
-                  )}
-                  
-                  {pkg.securityScore !== null && (
-                    <span className={`px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 ${
-                      pkg.securityScore >= 80 
-                        ? 'bg-green-100 text-green-800' 
-                        : pkg.securityScore >= 60 
-                        ? 'bg-yellow-100 text-yellow-800' 
-                        : pkg.securityScore >= 40
-                        ? 'bg-orange-100 text-orange-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      <Shield className="w-3 h-3" />
-                      {pkg.securityScore}
-                    </span>
-                  )}
-                  
-                  {pkg.vulnerabilities > 0 && (
-                    <span className="px-2 py-0.5 bg-red-100 text-red-800 text-xs font-semibold rounded flex items-center gap-1">
-                      <AlertTriangle className="w-3 h-3" />
-                      {pkg.vulnerabilities} {pkg.vulnerabilities === 1 ? 'vuln' : 'vulns'}
-                    </span>
-                  )}
-                </div>
+            <div className="flex items-center justify-between">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-medium text-gray-900 truncate">{pkg.displayName}</h3>
+                <p className="text-sm text-gray-500 mt-1">by {pkg.author}</p>
+                <p className="text-sm text-gray-600 mt-2 line-clamp-2">{pkg.description}</p>
                 
-                <p className="text-gray-600 mb-3">{pkg.description}</p>
-                
-                <div className="flex items-center flex-wrap gap-x-4 gap-y-2 text-sm text-gray-500">
-                  <span className="bg-gray-100 px-2 py-1 rounded">{pkg.category}</span>
-                  {pkg.tags.map((tag, i) => (
-                    <span key={i} className="text-gray-500">{tag}</span>
-                  ))}
-                  <span>📥 {pkg.stats.weekly.toLocaleString()} weekly</span>
-                  <span>Updated {pkg.updated}</span>
+                {/* GitHub Stats */}
+                <div className="flex items-center space-x-4 mt-3 text-xs text-gray-500">
+                  <div className="flex items-center space-x-1">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <span>{pkg.stars.toLocaleString()}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>{pkg.forks.toLocaleString()}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{pkg.openIssues} issues</span>
+                  </div>
                 </div>
               </div>
               
-              <button className="text-gray-400 hover:text-yellow-500 ml-4">
-                <Star className="w-5 h-5" />
-              </button>
+              <div className="flex items-center space-x-2 ml-4">
+                {pkg.isOfficial && (
+                  <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">
+                    Official
+                  </span>
+                )}
+                {pkg.isCommunity && (
+                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">
+                    Community
+                  </span>
+                )}
+                <button className="text-gray-400 hover:text-yellow-500">
+                  <Star className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </Link>
         ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="mt-8 flex items-center justify-center space-x-2">
+        <button className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700">←</button>
+        <button className="px-3 py-2 text-sm bg-gray-100 text-gray-900 rounded">1</button>
+        <button className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700">2</button>
+        <button className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700">3</button>
+        <span className="px-2 text-sm text-gray-500">...</span>
+        <button className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700">21</button>
+        <button className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700">→</button>
       </div>
     </div>
   );

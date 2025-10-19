@@ -7,10 +7,24 @@
   "isOfficial": false,
   "isCommunity": true,
   "isHostable": true,
+  "stars": 78,
+  "forks": 23,
+  "openIssues": 5,
+  "watchers": 78,
   "repository": {
     "provider": "github.com",
     "url": "https://github.com/chris-miaskowski/custom-gitlab-mcp-server"
   },
+  "maintainers": [
+    {
+      "login": "chris-miaskowski",
+      "name": "Chris Miaskowski",
+      "email": "chris@example.com",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/45678?v=4",
+      "htmlUrl": "https://github.com/chris-miaskowski",
+      "type": "User"
+    }
+  ],
   "versions": [
     {
       "version": "latest",

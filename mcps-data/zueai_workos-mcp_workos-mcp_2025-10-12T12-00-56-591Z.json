@@ -7,10 +7,24 @@
   "isOfficial": false,
   "isCommunity": true,
   "isHostable": true,
+  "stars": 187,
+  "forks": 39,
+  "openIssues": 8,
+  "watchers": 187,
   "repository": {
     "provider": "github.com",
     "url": "https://github.com/zueai/workos-mcp"
   },
+  "maintainers": [
+    {
+      "login": "zueai",
+      "name": "Zue AI Team",
+      "email": "team@zue.ai",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/90123?v=4",
+      "htmlUrl": "https://github.com/zueai",
+      "type": "Organization"
+    }
+  ],
   "versions": [
     {
       "version": "latest",

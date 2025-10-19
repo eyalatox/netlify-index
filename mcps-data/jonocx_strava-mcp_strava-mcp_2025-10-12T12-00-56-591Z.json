@@ -7,10 +7,24 @@
   "isOfficial": false,
   "isCommunity": true,
   "isHostable": true,
+  "stars": 89,
+  "forks": 18,
+  "openIssues": 4,
+  "watchers": 89,
   "repository": {
     "provider": "github.com",
     "url": "https://github.com/JonoCX/strava-mcp"
   },
+  "maintainers": [
+    {
+      "login": "jonocx",
+      "name": "Jono CX",
+      "email": "jono@cx.dev",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/34567?v=4",
+      "htmlUrl": "https://github.com/JonoCX",
+      "type": "User"
+    }
+  ],
   "versions": [
     {
       "version": "latest",

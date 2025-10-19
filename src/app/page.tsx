@@ -1,217 +1,184 @@
-import { Search } from "lucide-react";
-import Link from "next/link";
 import { getAllMCPData } from "@/lib/mcpData";
-import PackageList from "@/components/PackageList";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Link from "next/link";
+import { Search } from "lucide-react";
 
 export default function Home() {
   // Load all MCP data from JSON files
   const allMCPs = getAllMCPData();
-  
-  // Generate real statistics - calculate packages added over time
-  const now = new Date();
-  const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-  const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-  
-  // Count packages added in different time periods
-  // Use _fileDate (when file was added) instead of firstReleaseDate (when package was released)
-  const dailyAdded = allMCPs.filter(mcp => {
-    const addedDate = new Date(mcp._fileDate || mcp.firstReleaseDate);
-    return addedDate >= oneDayAgo;
-  }).length;
-  
-  const weeklyAdded = allMCPs.filter(mcp => {
-    const addedDate = new Date(mcp._fileDate || mcp.firstReleaseDate);
-    return addedDate >= oneWeekAgo;
-  }).length;
-  
-  const monthlyAdded = allMCPs.filter(mcp => {
-    const addedDate = new Date(mcp._fileDate || mcp.firstReleaseDate);
-    return addedDate >= oneMonthAgo;
-  }).length;
-  
+
+  // Calculate statistics from real data
   const stats = {
     total: allMCPs.length,
-    weekly: weeklyAdded,
-    daily: dailyAdded,
-    monthly: monthlyAdded
+    categories: new Set(allMCPs.map(mcp => mcp.platform)).size + 
+                (allMCPs.some(m => m.isOfficial) ? 1 : 0) + 
+                (allMCPs.some(m => m.isCommunity) ? 1 : 0), // Unique platforms + Official + Community
+    featured: allMCPs.filter(mcp => mcp.isOfficial).length, // Official packages as featured
+    openSource: allMCPs.filter(mcp => mcp.repository?.provider === 'github.com').length // Packages with GitHub repos
   };
+
+  // Generate categories from real data
+  const categoryMap = new Map<string, number>();
   
-  // Extract unique categories from the data
-  const categorySet = new Set<string>();
   allMCPs.forEach(mcp => {
-    if (mcp.isOfficial) categorySet.add('Official');
-    if (mcp.isCommunity) categorySet.add('Community');
-    categorySet.add(mcp.platform);
+    if (mcp.isOfficial) {
+      categoryMap.set('Official Servers', (categoryMap.get('Official Servers') || 0) + 1);
+    }
     
-    // Add category based on name patterns
     const name = mcp.name.toLowerCase();
     if (name.includes('database') || name.includes('mongo') || name.includes('sql')) {
-      categorySet.add('Databases');
-    } else if (name.includes('gitlab') || name.includes('github')) {
-      categorySet.add('Version Control');
-    } else if (name.includes('pdf') || name.includes('excel') || name.includes('reader')) {
-      categorySet.add('Document Processing');
-    } else if (name.includes('earth') || name.includes('data')) {
-      categorySet.add('Data Sources');
-    } else if (name.includes('inspector') || name.includes('toolkit')) {
-      categorySet.add('Development Tools');
-    } else {
-      categorySet.add('Other Servers');
+      categoryMap.set('Database', (categoryMap.get('Database') || 0) + 1);
+    } else if (name.includes('api')) {
+      categoryMap.set('API', (categoryMap.get('API') || 0) + 1);
+    } else if (name.includes('file') || name.includes('pdf') || name.includes('excel')) {
+      categoryMap.set('File Processing', (categoryMap.get('File Processing') || 0) + 1);
+    } else if (name.includes('tool') || name.includes('dev')) {
+      categoryMap.set('Development', (categoryMap.get('Development') || 0) + 1);
+    } else if (name.includes('data')) {
+      categoryMap.set('Data Sources', (categoryMap.get('Data Sources') || 0) + 1);
     }
   });
-  
-  const categories = Array.from(categorySet);
-  
-  // Convert MCP data to package format
-  const packages = allMCPs.map((mcp, index) => {
-    const latestVersion = mcp.versions[0];
+
+  const categories = Array.from(categoryMap.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 18); // Get top 18 categories for 3 rows of 6
+
+  // Get package list
+  const packages = allMCPs.map((mcp) => {
     const nameParts = mcp.identifier.split('/');
     const packageName = nameParts[nameParts.length - 1];
     
-    // Determine category
-    let category = 'Other Servers';
-    if (mcp.isOfficial) category = 'Official';
-    else if (mcp.isCommunity) category = 'Community';
-    
-    // Calculate days since release
-    const releaseDate = new Date(latestVersion?.releaseDate || mcp.firstReleaseDate);
-    const now = new Date();
-    const daysSince = Math.floor((now.getTime() - releaseDate.getTime()) / (1000 * 60 * 60 * 24));
-    const updatedText = daysSince === 0 ? 'today' : daysSince === 1 ? 'yesterday' : `${daysSince} days ago`;
-    
     return {
-      id: index + 1,
       name: packageName,
       displayName: mcp.name,
-      author: mcp.identifier.split('/')[0],
+      identifier: mcp.identifier,
+      author: nameParts[0],
       description: mcp.description,
-      tags: [mcp.platform, mcp.isOfficial ? 'official' : 'community'],
-      category,
-      stats: {
-        weekly: latestVersion?.securityReview?.weeklyDownloads || 0,
-        total: (latestVersion?.securityReview?.weeklyDownloads || 0) * 52
-      },
-      updated: updatedText,
-      vulnerabilities: latestVersion?.securityReview?.vulnerabilities?.length || 0,
-      securityScore: latestVersion?.securityReview ? Math.round(
-        (latestVersion.securityReview.scores.supplyChainSecurity * 0.25 +
-        latestVersion.securityReview.scores.vulnerability * 0.30 +
-        latestVersion.securityReview.scores.quality * 0.20 +
-        latestVersion.securityReview.scores.maintainabile * 0.15 +
-        latestVersion.securityReview.scores.license * 0.10)
-      ) : null,
+      stars: mcp.stars || 0,
+      forks: mcp.forks || 0,
+      openIssues: mcp.openIssues || 0,
       isOfficial: mcp.isOfficial,
-      isCommunity: mcp.isCommunity
+      isCommunity: mcp.isCommunity,
+      platform: mcp.platform,
+      firstReleaseDate: mcp.firstReleaseDate
     };
-  }).sort((a, b) => b.stats.weekly - a.stats.weekly); // Sort by popularity
+  });
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-100 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">OX</span>
-            </div>
-            <span className="text-xl font-semibold text-gray-900">MCP Directory</span>
-          </div>
-          <nav className="flex items-center space-x-8">
-            <Link href="/packages" className="text-gray-600 hover:text-gray-900">Packages</Link>
-            <Link href="/documentation" className="text-gray-600 hover:text-gray-900">Documentation</Link>
-            <Link href="/community" className="text-gray-600 hover:text-gray-900">Community</Link>
-            <Link href="/pricing" className="text-gray-600 hover:text-gray-900">Pricing</Link>
-            <button className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium">Get Started</button>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">MCP Directory</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-            Browse the largest collection of Model Context Protocol packages. Find high-quality packages for all your development needs, from APIs to databases.
+      {/* Hero Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-[#061c37] to-[#3f11f7] bg-clip-text text-transparent mb-6">
+            MCP Directory
+          </h1>
+          <p className="text-gray-700 text-lg mb-10 max-w-2xl mx-auto">
+            This is a list of all the packages on npm. It is sorted by name. The list is updated in real time. The list might not be exhaustive. If you want to see a particular package, you can use the search feature at the top of every page on Socket.
           </p>
-          
+
+          {/* Search Bar */}
+          <div className="max-w-3xl mx-auto mb-12">
+            <div className="relative">
+              <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search MCP servers"
+                className="w-full pl-14 pr-4 py-3 border border-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+              />
+            </div>
+          </div>
 
           {/* Stats */}
-          <div className="flex justify-center space-x-8 text-sm text-gray-600 mb-12">
+          <div className="grid grid-cols-4 gap-8 max-w-3xl mx-auto">
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">{stats.total.toLocaleString()}</div>
-              <div>Total</div>
+              <div className="text-gray-700 text-sm mb-2">MCP Servers</div>
+              <div className="h-px bg-gray-200 mb-2"></div>
+              <div className="text-4xl font-semibold text-gray-900">{stats.total.toLocaleString()}</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">{stats.daily}</div>
-              <div>Daily</div>
+              <div className="text-gray-700 text-sm mb-2">Categories</div>
+              <div className="h-px bg-gray-200 mb-2"></div>
+              <div className="text-4xl font-semibold text-gray-900">{stats.categories}</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">{stats.weekly}</div>
-              <div>Weekly</div>
+              <div className="text-gray-700 text-sm mb-2">Featured</div>
+              <div className="h-px bg-gray-200 mb-2"></div>
+              <div className="text-4xl font-semibold text-gray-900">{stats.featured}</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">{stats.monthly}</div>
-              <div>Monthly</div>
+              <div className="text-gray-700 text-sm mb-2">Open Source</div>
+              <div className="h-px bg-gray-200 mb-2"></div>
+              <div className="text-4xl font-semibold text-gray-900">{stats.openSource}</div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Popular Categories */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Popular Categories</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.slice(0, 12).map((category, index) => {
-              // Count packages in this category
-              const count = packages.filter(pkg => 
-                pkg.category === category || 
-                pkg.tags.includes(category.toLowerCase()) ||
-                (category === 'nodejs' && pkg.tags.includes('nodejs')) ||
-                (category === 'Community' && pkg.isCommunity) ||
-                (category === 'Official' && pkg.isOfficial)
-              ).length;
-              
-              // Get icon/emoji for category
-              const getCategoryIcon = (cat: string) => {
-                if (cat === 'Official') return '🏅';
-                if (cat === 'Community') return '👥';
-                if (cat === 'nodejs') return '🟢';
-                if (cat === 'python') return '🐍';
-                if (cat === 'Databases') return '🗄️';
-                if (cat === 'Version Control') return '🔀';
-                if (cat === 'Document Processing') return '📄';
-                if (cat === 'Data Sources') return '📊';
-                if (cat === 'Development Tools') return '🛠️';
-                return '📦';
-              };
-              
-              return (
-                <Link 
-                  key={index}
-                  href={`/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
-                  className="p-4 border border-gray-200 rounded-lg text-center hover:border-blue-500 hover:bg-blue-50 transition-colors"
-                >
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg mx-auto mb-2 flex items-center justify-center text-2xl">
-                    {getCategoryIcon(category)}
-                  </div>
-                  <div className="text-sm font-medium text-gray-900">{category}</div>
-                  <div className="text-xs text-gray-500">{count} {count === 1 ? 'package' : 'packages'}</div>
-                </Link>
-              );
-            })}
+      {/* Popular Categories */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Popular Categories</h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
+            {categories.map((category, index) => (
+              <Link
+                key={index}
+                href={`/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+                className="bg-white border border-gray-200 rounded-2xl p-6 text-center hover:border-gray-300 hover:shadow-md transition-all"
+              >
+                <div className="text-2xl mb-3">🔧</div>
+                <div className="font-semibold text-gray-900 text-sm mb-1">{category.name}</div>
+                <div className="text-gray-500 text-xs">{category.count} servers</div>
+              </Link>
+            ))}
           </div>
-          <div className="text-center mt-6">
-            <Link href="/categories" className="text-blue-600 hover:text-blue-800 font-medium">
-              View all {categories.length} categories →
+
+          <div className="text-center">
+            <Link href="/categories" className="text-purple-700 hover:text-purple-900 font-semibold text-sm inline-flex items-center border-b-2 border-purple-700">
+              View All
+              <span className="ml-2">→</span>
             </Link>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* All Packages with Search */}
-        <section>
-          <PackageList packages={packages} />
-        </section>
-      </main>
+      {/* All Packages */}
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 mb-8">All Packages</h2>
+          
+          <div className="space-y-3">
+            {packages.slice(0, 22).map((pkg, index) => (
+              <Link
+                key={index}
+                href={`/package/${pkg.name}`}
+                className="block text-gray-700 hover:text-gray-900 underline text-base"
+              >
+                {pkg.identifier}
+              </Link>
+            ))}
+          </div>
+
+          {/* Pagination */}
+          <div className="mt-8 flex items-center justify-center space-x-4 text-sm">
+            <button className="text-gray-400">←</button>
+            <button className="text-purple-700 font-bold">1</button>
+            <button className="text-gray-700">2</button>
+            <button className="text-gray-700">3</button>
+            <button className="text-gray-700">4</button>
+            <button className="text-gray-700">5</button>
+            <span className="text-gray-700">...</span>
+            <button className="text-gray-700">21</button>
+            <button className="text-gray-700">→</button>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }

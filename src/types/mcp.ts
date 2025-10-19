@@ -61,6 +61,18 @@ export interface MCPData {
   isOfficial: boolean;
   isCommunity: boolean;
   isHostable: boolean;
+  stars?: number;
+  forks?: number;
+  openIssues?: number;
+  watchers?: number;
+  maintainers?: Array<{
+    login: string;
+    name?: string;
+    email?: string;
+    avatarUrl?: string;
+    htmlUrl?: string;
+    type: string;
+  }>;
   repository: {
     provider: string;
     url: string;
