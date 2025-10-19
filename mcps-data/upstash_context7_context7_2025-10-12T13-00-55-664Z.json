@@ -7,6 +7,22 @@
   "isOfficial": false,
   "isCommunity": true,
   "isHostable": true,
+  "visibility": "public",
+  "stars": 1250,
+  "forks": 89,
+  "openIssues": 12,
+  "watchers": 1250,
+  "licenseSpdxId": null,
+  "maintainers": [
+    {
+      "login": "upstash-team",
+      "name": "Upstash Team",
+      "email": "team@upstash.com",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/104484397?v=4",
+      "htmlUrl": "https://github.com/upstash",
+      "type": "Organization"
+    }
+  ],
   "repository": {
     "provider": "github.com",
     "url": "https://github.com/upstash/context7"

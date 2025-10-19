@@ -3,24 +3,202 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #000000;
+  --secondary: #6b7280;
+  --accent: #3b82f6;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --border: #e5e7eb;
+  --card-bg: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-border: var(--border);
+  --color-card-bg: var(--card-bg);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Focus styles */
+*:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Button styles */
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+}
+
+.btn-primary {
+  @apply bg-black text-white hover:bg-gray-800;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 text-gray-900 hover:bg-gray-200;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white border border-gray-200 rounded-lg shadow-sm;
+}
+
+/* Typography */
+.text-display {
+  @apply text-4xl font-bold text-gray-900;
+}
+
+.text-heading {
+  @apply text-2xl font-semibold text-gray-900;
+}
+
+.text-subheading {
+  @apply text-lg font-medium text-gray-700;
+}
+
+.text-body {
+  @apply text-base text-gray-600;
+}
+
+.text-caption {
+  @apply text-sm text-gray-500;
+}
+
+/* README content styling */
+.readme-wrapper {
+  @apply text-gray-800 max-w-none;
+}
+
+.readme-wrapper h1 {
+  @apply text-2xl font-bold text-gray-900 mt-6 mb-4 pb-3 border-b-2 border-gray-300 first:mt-0;
+}
+
+.readme-wrapper h2 {
+  @apply text-xl font-bold text-gray-900 mt-8 mb-4 pb-2 border-b border-gray-200;
+}
+
+.readme-wrapper h3 {
+  @apply text-lg font-semibold text-gray-900 mt-6 mb-3;
+}
+
+.readme-wrapper h4 {
+  @apply text-base font-semibold text-gray-900 mt-4 mb-2;
+}
+
+.readme-wrapper p {
+  @apply text-gray-700 leading-relaxed mb-3;
+}
+
+.readme-wrapper ul {
+  @apply list-disc list-outside my-3 text-gray-700 space-y-1 pl-5;
+}
+
+.readme-wrapper ol {
+  @apply list-decimal list-outside my-3 text-gray-700 space-y-1 pl-5;
+}
+
+.readme-wrapper li {
+  @apply mb-1;
+}
+
+.readme-wrapper a {
+  @apply text-blue-600 hover:text-blue-800 underline transition-colors;
+}
+
+.readme-wrapper code {
+  @apply bg-gray-100 text-red-600 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.readme-wrapper pre {
+  @apply bg-gray-900 text-gray-100 px-4 py-3 rounded-lg overflow-x-auto my-4 text-sm border border-gray-700;
+}
+
+.readme-wrapper pre code {
+  @apply bg-transparent text-gray-100 p-0;
+}
+
+.readme-wrapper blockquote {
+  @apply border-l-4 border-gray-300 pl-4 py-2 my-4 text-gray-600 italic bg-gray-50;
+}
+
+.readme-wrapper hr {
+  @apply my-6 border-t border-gray-200;
+}
+
+.readme-wrapper strong {
+  @apply font-semibold text-gray-900;
+}
+
+.readme-wrapper em {
+  @apply italic;
+}
+
+.readme-wrapper table {
+  @apply w-full border-collapse my-4;
+}
+
+.readme-wrapper th {
+  @apply bg-gray-100 border border-gray-300 px-4 py-2 text-left font-semibold;
+}
+
+.readme-wrapper td {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+.readme-wrapper img {
+  @apply max-w-full h-auto my-4 rounded-lg;
+}
+
+.readme-wrapper details {
+  @apply my-3 p-4 bg-gray-50 border border-gray-200 rounded-lg;
+}
+
+.readme-wrapper summary {
+  @apply font-semibold cursor-pointer text-gray-900 hover:text-blue-600 transition-colors;
 }

@@ -7,10 +7,24 @@
   "isOfficial": false,
   "isCommunity": true,
   "isHostable": true,
+  "stars": 98,
+  "forks": 21,
+  "openIssues": 3,
+  "watchers": 98,
   "repository": {
     "provider": "github.com",
     "url": "https://github.com/xraywu/mcp-pdf-extraction-server"
   },
+  "maintainers": [
+    {
+      "login": "xraywu",
+      "name": "Xray Wu",
+      "email": "xray@wu.dev",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/89012?v=4",
+      "htmlUrl": "https://github.com/xraywu",
+      "type": "User"
+    }
+  ],
   "versions": [
     {
       "version": "latest",

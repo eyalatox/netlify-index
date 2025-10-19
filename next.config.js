@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true,
-  distDir: 'out',
+  // Removed 'output: export' to enable API routes
   images: {
     unoptimized: true
   },
@@ -13,7 +10,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Optimize for static hosting
   swcMinify: true,
 };
 

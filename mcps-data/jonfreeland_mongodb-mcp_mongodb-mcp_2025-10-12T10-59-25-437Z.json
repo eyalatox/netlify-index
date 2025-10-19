@@ -7,10 +7,24 @@
   "isOfficial": false,
   "isCommunity": true,
   "isHostable": true,
+  "stars": 156,
+  "forks": 34,
+  "openIssues": 7,
+  "watchers": 156,
   "repository": {
     "provider": "github.com",
     "url": "https://github.com/jonfreeland/mongodb-mcp"
   },
+  "maintainers": [
+    {
+      "login": "jonfreeland",
+      "name": "Jon Freeland",
+      "email": "jon@freeland.dev",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/23456?v=4",
+      "htmlUrl": "https://github.com/jonfreeland",
+      "type": "User"
+    }
+  ],
   "versions": [
     {
       "version": "latest",

@@ -7,10 +7,24 @@
   "isOfficial": true,
   "isCommunity": false,
   "isHostable": true,
+  "stars": 2100,
+  "forks": 156,
+  "openIssues": 8,
+  "watchers": 2100,
   "repository": {
     "provider": "github.com",
     "url": "https://github.com/modelcontextprotocol/inspector"
   },
+  "maintainers": [
+    {
+      "login": "modelcontextprotocol",
+      "name": "Model Context Protocol Team",
+      "email": "team@modelcontextprotocol.io",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/12345?v=4",
+      "htmlUrl": "https://github.com/modelcontextprotocol",
+      "type": "Organization"
+    }
+  ],
   "versions": [
     {
       "version": "0.17.0",
