@@ -41,8 +41,7 @@
         "isMalicious": false,
         "weeklyDownloads": 10000,
         "trend": "decreasing",
-        "vulnerabilities": [
-        ]
+        "vulnerabilities": []
       }
     },
     {
@@ -60,8 +59,7 @@
         "isMalicious": false,
         "weeklyDownloads": 10000,
         "trend": "decreasing",
-        "vulnerabilities": [
-        ]
+        "vulnerabilities": []
       }
     },
     {
@@ -79,8 +77,7 @@
         "isMalicious": false,
         "weeklyDownloads": 10000,
         "trend": "decreasing",
-        "vulnerabilities": [
-        ]
+        "vulnerabilities": []
       }
     },
     {
@@ -108,7 +105,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 40,
+          "vulnerability": 60,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -162,7 +159,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 40,
+          "vulnerability": 60,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -216,7 +213,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 40,
+          "vulnerability": 60,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -270,7 +267,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 40,
+          "vulnerability": 60,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -324,7 +321,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 40,
+          "vulnerability": 60,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -378,7 +375,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 40,
+          "vulnerability": 60,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -432,7 +429,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 80,
+          "vulnerability": 20,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -518,7 +515,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 80,
+          "vulnerability": 20,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -636,7 +633,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 80,
+          "vulnerability": 20,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -754,7 +751,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 90,
-          "vulnerability": 20,
+          "vulnerability": 80,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -808,7 +805,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 80,
-          "vulnerability": 80,
+          "vulnerability": 20,
           "quality": 75,
           "maintainabile": 80,
           "license": 100

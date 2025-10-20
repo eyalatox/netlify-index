@@ -83,8 +83,7 @@ export interface MCPData {
 
 /**
  * Calculate overall security score from individual scores
- * Note: Vulnerability score is inverted (0=good, 100=bad) 
- * so we convert it to match other scores (100=good, 0=bad)
+ * All scores use the same scale: 100=good/secure, 0=bad/insecure
  */
 export function calculateOverallScore(scores: SecurityReview['scores']): number {
   const weights = {
@@ -95,12 +94,9 @@ export function calculateOverallScore(scores: SecurityReview['scores']): number 
     license: 0.10
   };
   
-  // Invert vulnerability score: 0 vulnerabilities (score=0) should be 100 in final calculation
-  const invertedVulnerabilityScore = 100 - scores.vulnerability;
-  
   return Math.round(
     scores.supplyChainSecurity * weights.supplyChainSecurity +
-    invertedVulnerabilityScore * weights.vulnerability +
+    scores.vulnerability * weights.vulnerability +
     scores.quality * weights.quality +
     scores.maintainabile * weights.maintainabile +
     scores.license * weights.license
