@@ -35,7 +35,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 100,
-          "vulnerability": 60,
+          "vulnerability": 40,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -118,7 +118,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 100,
-          "vulnerability": 60,
+          "vulnerability": 40,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
@@ -201,7 +201,7 @@
       "securityReview": {
         "scores": {
           "supplyChainSecurity": 100,
-          "vulnerability": 60,
+          "vulnerability": 40,
           "quality": 75,
           "maintainabile": 80,
           "license": 100

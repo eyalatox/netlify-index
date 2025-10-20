@@ -126,43 +126,18 @@ export default function PackagePage({ params }: PackagePageProps) {
   const normalizeFilePath = (filePath: string) => {
     if (!filePath) return '';
     
-    // Remove temporary/container paths - extract meaningful part after common patterns
-    // Pattern: /var/folders/.../xxx/project-name/actual/path/file.js
-    // Result: actual/path/file.js
+    // Remove temporary directory prefix like /var/folders/.../T/mcp-scan-{uuid}/
+    // Match pattern: anything up to and including /mcp-scan-{uuid}/
+    const scanDirPattern = /^.*\/mcp-scan-[a-f0-9-]+\//;
+    const normalized = filePath.replace(scanDirPattern, '');
     
-    // Try to find common project structure markers
-    const patterns = [
-      /\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\/([a-zA-Z0-9_.\-\/]+)$/,  // After 3 dirs
-      /\/tmp\/[^\/]+\/[^\/]+\/([a-zA-Z0-9_.\-\/]+)$/,  // After /tmp/xxx/xxx/
-      /\/var\/folders\/[^\/]+\/[^\/]+\/[^\/]+\/[^\/]+\/([a-zA-Z0-9_.\-\/]+)$/,  // After /var/folders/...
-    ];
-    
-    for (const pattern of patterns) {
-      const match = filePath.match(pattern);
-      if (match && match[1]) {
-        return match[1];
-      }
-    }
-    
-    // If no pattern matches, try to get last meaningful segments
-    const parts = filePath.split('/');
-    // Get last 3-4 segments that look like actual code paths
-    const meaningfulParts = parts.filter(p => 
-      p && !p.match(/^[a-f0-9]{8,}$/) && p !== 'tmp' && p !== 'var' && p !== 'folders'
-    ).slice(-4);
-    
-    return meaningfulParts.join('/') || filePath;
+    // If the path is still absolute after normalization, make it relative
+    return normalized.startsWith('/') ? normalized.slice(1) : normalized;
   };
 
   // Helper function to get score color
   const getScoreColor = (score: number, isVulnerability = false) => {
-    if (isVulnerability) {
-      if (score <= 20) return { stroke: '#10b981', text: 'text-green-600' };
-      if (score <= 40) return { stroke: '#f59e0b', text: 'text-yellow-600' };
-      if (score <= 60) return { stroke: '#f97316', text: 'text-orange-600' };
-      return { stroke: '#ef4444', text: 'text-red-600' };
-    }
-    
+    // All scores now use the same scale: 100=good/green, 0=bad/red
     if (score >= 80) return { stroke: '#10b981', text: 'text-green-600' };
     if (score >= 60) return { stroke: '#f59e0b', text: 'text-yellow-600' };
     if (score >= 40) return { stroke: '#f97316', text: 'text-orange-600' };

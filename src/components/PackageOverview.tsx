@@ -31,6 +31,14 @@ interface PackageOverviewProps {
   };
 }
 
+// Helper function to get color classes based on score
+const getScoreColorClasses = (score: number): { bg: string; text: string } => {
+  if (score >= 80) return { bg: 'bg-green-100', text: 'text-green-600' };
+  if (score >= 60) return { bg: 'bg-yellow-100', text: 'text-yellow-600' };
+  if (score >= 40) return { bg: 'bg-orange-100', text: 'text-orange-600' };
+  return { bg: 'bg-red-100', text: 'text-red-600' };
+};
+
 export default function PackageOverview({ packageData }: PackageOverviewProps) {
   const { securityScores, warnings, maintainers, keywords, installCommand } = packageData;
 
@@ -65,32 +73,32 @@ export default function PackageOverview({ packageData }: PackageOverviewProps) {
             <h3 className="text-xl font-semibold text-gray-900 mb-6">Security Overview</h3>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
               <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <span className="text-2xl font-bold text-green-600">{securityScores.supplyChain}</span>
+                <div className={`w-16 h-16 ${getScoreColorClasses(securityScores.supplyChain).bg} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                  <span className={`text-2xl font-bold ${getScoreColorClasses(securityScores.supplyChain).text}`}>{securityScores.supplyChain}</span>
                 </div>
                 <div className="text-sm text-gray-600">Supply Chain Security</div>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <span className="text-2xl font-bold text-yellow-600">{securityScores.vulnerability}</span>
+                <div className={`w-16 h-16 ${getScoreColorClasses(securityScores.vulnerability).bg} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                  <span className={`text-2xl font-bold ${getScoreColorClasses(securityScores.vulnerability).text}`}>{securityScores.vulnerability}</span>
                 </div>
                 <div className="text-sm text-gray-600">Vulnerability</div>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <span className="text-2xl font-bold text-orange-600">{securityScores.quality}</span>
+                <div className={`w-16 h-16 ${getScoreColorClasses(securityScores.quality).bg} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                  <span className={`text-2xl font-bold ${getScoreColorClasses(securityScores.quality).text}`}>{securityScores.quality}</span>
                 </div>
                 <div className="text-sm text-gray-600">Quality</div>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <span className="text-2xl font-bold text-red-600">{securityScores.maintenance}</span>
+                <div className={`w-16 h-16 ${getScoreColorClasses(securityScores.maintenance).bg} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                  <span className={`text-2xl font-bold ${getScoreColorClasses(securityScores.maintenance).text}`}>{securityScores.maintenance}</span>
                 </div>
                 <div className="text-sm text-gray-600">Maintenance</div>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <span className="text-2xl font-bold text-gray-600">{securityScores.license}</span>
+                <div className={`w-16 h-16 ${getScoreColorClasses(securityScores.license).bg} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                  <span className={`text-2xl font-bold ${getScoreColorClasses(securityScores.license).text}`}>{securityScores.license}</span>
                 </div>
                 <div className="text-sm text-gray-600">License</div>
               </div>

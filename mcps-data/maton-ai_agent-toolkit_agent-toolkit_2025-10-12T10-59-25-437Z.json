@@ -32,8 +32,8 @@
       "releaseDate": "2025-05-22",
       "securityReview": {
         "scores": {
-          "supplyChainSecurity": 100,
-          "vulnerability": 100,
+          "supplyChainSecurity": 0,
+          "vulnerability": 0,
           "quality": 75,
           "maintainabile": 80,
           "license": 100
